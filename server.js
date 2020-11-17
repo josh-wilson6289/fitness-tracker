@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-const databaseUrl = "workouttracker";
+const databaseUrl = "workout";
 const collections = ["workouts"];
 
 const db = mongojs(databaseUrl, collections);
@@ -24,6 +24,8 @@ db.on("error", error => {
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "./public/index.html"));
 });
+
+
 
 app.listen(3000, () => {
   console.log("App running on port 3000!");
