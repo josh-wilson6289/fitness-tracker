@@ -21,11 +21,21 @@ db.on("error", error => {
   console.log("Database Error:", error);
 });
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "./public/index.html"));
+app.get("/api/workouts", (req, res) => {
+  db.workouts.find({}, (error, data) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.json(data);
+    }
+  });  
 });
 
 
+// needs to be listed last.  catch all if route is typed in incorrectly
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "./public/index.html"));
+});
 
 app.listen(3000, () => {
   console.log("App running on port 3000!");
