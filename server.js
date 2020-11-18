@@ -21,6 +21,8 @@ db.on("error", error => {
   console.log("Database Error:", error);
 });
 
+// api routes
+// getLastWorkout
 app.get("/api/workouts", (req, res) => {
   db.workouts.find({}, (error, data) => {
     if (error) {
@@ -31,6 +33,57 @@ app.get("/api/workouts", (req, res) => {
   });  
 });
 
+// addExercise
+app.put("/api/workouts", (req, res) => {
+  db.workouts.update(
+    {
+      _id: mongojs.ObjectID(req.params.id)
+    },
+    {
+      $set: {
+        exercise: req.body.exercise
+      }
+    },
+    (error, data) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(data);
+      }
+    }
+  );
+});
+
+// createWorkout
+app.post("/api/workouts", (req, res) => {
+  console.log(req.body);
+  db.workouts.insert(req.body, (error, data) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(data);
+    }
+  });
+});
+
+app.get("/api/workouts/range", (req, res) => {
+  db.workouts.find({}, (error, data) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+// html routes
+app.get("/stats", (req, res) => {
+  res.sendFile(path.join(__dirname + "/public/stats.html"));
+});
+
+app.get("/exercise", (req, res) => {
+  res.sendFile(path.join(__dirname + "/public/exercise.html"));
+});
 
 // needs to be listed last.  catch all if route is typed in incorrectly
 app.get("*", (req, res) => {
