@@ -34,7 +34,7 @@ app.get("/api/workouts", (req, res) => {
 });
 
 // addExercise
-app.put("/api/workouts", (req, res) => {
+app.put("/api/workouts/:id", (req, res) => {
   db.workouts.update(
     {
       _id: mongojs.ObjectID(req.params.id)
