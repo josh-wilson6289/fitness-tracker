@@ -2,6 +2,7 @@ const express = require("express");
 const mongojs = require("mongojs");
 const logger = require("morgan");
 const path = require("path");
+const Workout = require("./models/workoutModel");
 
 const app = express();
 
@@ -22,6 +23,7 @@ db.on("error", error => {
 });
 
 // api routes
+
 // getLastWorkout
 app.get("/api/workouts", (req, res) => {
   db.workouts.find({}, (error, data) => {
@@ -38,6 +40,7 @@ app.put("/api/workouts/:id", (req, res) => {
   db.workouts.update(
     {
       _id: mongojs.ObjectID(req.params.id)
+
     },
     {
       $push: {
@@ -63,9 +66,9 @@ app.put("/api/workouts/:id", (req, res) => {
 });
 
 // createWorkout
-app.post("/api/workouts", (req, res) => {
-  console.log(req.body);
-  db.workouts.insert(req.body, (error, data) => {
+app.post("/api/workouts", ({body}, res) => {
+  const workout = new Workout(body);
+  db.workouts.insert(workout, (error, data) => {
     if (error) {
       res.send(error);
     } else {
@@ -74,6 +77,7 @@ app.post("/api/workouts", (req, res) => {
   });
 });
 
+//getWorkoutsInRange
 app.get("/api/workouts/range", (req, res) => {
   db.workouts.find({}, (error, data) => {
     if (error) {
