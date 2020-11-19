@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
 
-// const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 const Workout = require("./models/workoutModel");
 
@@ -17,16 +17,20 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-  useNewUrlParser: true,
-  useFindAndModify: false
-});
-
 const databaseUrl = "workout";
 const collections = ["workouts"];
 
 const db = mongojs(databaseUrl, collections);
+
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/workout',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+);
 
 db.on("error", error => {
   console.log("Database Error:", error);
@@ -50,7 +54,6 @@ app.put("/api/workouts/:id", (req, res) => {
   db.workouts.update(
     {
       _id: mongojs.ObjectID(req.params.id)
-
     },
     {
       $push: {
@@ -112,5 +115,5 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "./public/index.html"));
 });
 
-const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => console.log("Now listening on: " + PORT));
