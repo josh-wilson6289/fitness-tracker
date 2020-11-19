@@ -2,10 +2,10 @@ let mongoose = require("mongoose");
 let Workout = require("../models/workoutModel");
 // let db = require("server.js");
 
-mongoose.connect("mongodb://localhost/workout", {
-  useNewUrlParser: true,
-  useFindAndModify: false
-});
+// mongoose.connect("mongodb://localhost/workout", {
+//   useNewUrlParser: true,
+//   useFindAndModify: false
+// });
 
 let workoutSeed = [
   {

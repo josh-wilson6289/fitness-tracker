@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 const Workout = require("./models/workoutModel");
 
