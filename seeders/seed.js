@@ -2,11 +2,12 @@ let mongoose = require("mongoose");
 let Workout = require("../models/workoutModel");
 // let db = require("server.js");
 
-// mongoose.connect("mongodb://localhost/workout", {
-//   useNewUrlParser: true,
-//   useFindAndModify: false
-// });
-
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/workout", {
+  useNewUrlParser: true,
+  useFindAndModify: false
+}
+);
 let workoutSeed = [
   {
     day: new Date().setDate(new Date().getDate()-10),
