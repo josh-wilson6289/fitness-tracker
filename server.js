@@ -17,6 +17,8 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
+require("./routes/htmlRoutes")(app);
+
 const databaseUrl = "workout";
 const collections = ["workouts"];
 
@@ -100,20 +102,5 @@ app.get("/api/workouts/range", (req, res) => {
     }
   });
 });
-
-// html routes
-app.get("/stats", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/stats.html"));
-});
-
-app.get("/exercise", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/exercise.html"));
-});
-
-// needs to be listed last.  catch all if route is typed in incorrectly
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "./public/index.html"));
-});
-
 
 app.listen(PORT, () => console.log("Now listening on: " + PORT));
