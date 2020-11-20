@@ -33,6 +33,8 @@ mongoose.connect(
   }
 );
 
+module.exports = {mongoose};
+
 db.on("error", error => {
   console.log("Database Error:", error);
 });
@@ -101,5 +103,6 @@ app.get("/api/workouts/range", (req, res) => {
     }
   });
 });
+
 
 app.listen(PORT, () => console.log("Now listening on: " + PORT));
