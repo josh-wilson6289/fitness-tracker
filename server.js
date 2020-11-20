@@ -53,9 +53,9 @@ app.get("/api/workouts", (req, res) => {
 // addExercise
 app.put("/api/workouts/:id", (req, res) => {
   db.workouts.update(
-    // {
-    //   _id: mongojs.ObjectID(req.params.id)
-    // },
+    {
+      _id: mongojs.ObjectID(req.params.id)
+    },
     {
       $push: {
         exercises: {  
